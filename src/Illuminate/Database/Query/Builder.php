@@ -1608,7 +1608,7 @@ class Builder
     /**
      * Determine if any rows exist for the current query.
      *
-     * @return bool|null
+     * @return bool
      */
     public function exists()
     {
@@ -1616,11 +1616,7 @@ class Builder
 
         $results = $this->connection->select($sql, $this->getBindings(), ! $this->useWritePdo);
 
-        if (isset($results[0])) {
-            $results = (array) $results[0];
-
-            return (bool) $results['exists'];
-        }
+        return (bool) data_get($results, '0.exists');
     }
 
     /**
